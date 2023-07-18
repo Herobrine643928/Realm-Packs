@@ -1,0 +1,48 @@
+{
+	"format_version": 2,
+	"header": {
+		"name": "Floating Leaderboards",
+		"description": "Floating leaderboard pack.\nCreated by Herobrine64#3928.\nUPDATED FOR 1.20.10",
+		"uuid": "319d990e-6da0-1d57-0f68-b3bfeb8a2767",
+		"version": [
+			1,
+			4,
+			0
+		],
+		"min_engine_version": [
+			1,
+			18,
+			0
+		]
+	},
+	"modules": [
+		{
+			"type": "data",
+			"uuid": "bd3fea0b-3e4e-59e5-37d4-440f2ba234eb",
+			"version": [
+				1,
+				0,
+				0
+			]
+		},
+		{
+			"type": "script",
+			"language": "javascript",
+			"entry": "scripts/index.js",
+			"uuid": "79231bc7-6dc0-1746-01f0-16f054e835cb",
+			"version": "1.4.0-beta"
+		}
+	],
+	"metadata": {
+		"authors": [
+			"Herobrine64#3928"
+		]
+	},
+	"dependencies": [
+		{
+			"description": "@minecraft/server module dependency",
+			"module_name": "@minecraft/server",
+			"version": "1.4.0-beta"
+		}
+	]
+}

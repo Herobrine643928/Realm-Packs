@@ -1,0 +1,29 @@
+{
+	"format_version": 2,
+	"header": {
+		"name": "Floating Leaderboards",
+		"description": "Floating leaderboard pack.\nCreated by Herobrine64#3928",
+		"uuid": "4f9d4eeb-9f4e-1266-ceaf-b614ff576377",
+		"version": [
+			1,
+			0,
+			0
+		],
+		"min_engine_version": [
+			1,
+			17,
+			0
+		]
+	},
+	"modules": [
+		{
+			"type": "resources",
+			"uuid": "096c2455-0879-ca0f-ca52-3f8382403202",
+			"version": [
+				1,
+				0,
+				0
+			]
+		}
+	]
+}
