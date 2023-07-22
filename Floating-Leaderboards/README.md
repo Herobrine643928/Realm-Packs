@@ -43,6 +43,10 @@ Tag: `Leaderboard:Objective-Header`
 Tag: `leaderboard`
 - This tag will let the text entity know it is supposed to be displaying a leaderboard.
 
+Example commands to add the tags:
+`/tag @e[type=floating:text,c=1] add "Leaderboard:money-§l§6TOP COINS"`
+`/tag @e[type=floating:text,c=1] add leaderboard`
+
 !! BOTH TAGS ARE CASE-SENSITIVE !!
 
 # Notes
