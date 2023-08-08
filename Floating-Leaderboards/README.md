@@ -25,6 +25,7 @@ The constant `configItem` is simply the staff tag that will allow any player who
 To use this pack:
 1. Right-click a block with the config item while you have the admin tag (these are `'minecraft:nether_star'` & `'stafftag'` by default)
 2. Configure the menu to your liking! If an objective you enter does not exist, it will be created.
+3. The leaderboard entity will be summoned above the block you right-clicked on!
 3. To edit a leaderboard, just click the block underneath it, allowing you to edit the objective, display, colours, and even despawn the leaderboard if you want.
 
 # Notes

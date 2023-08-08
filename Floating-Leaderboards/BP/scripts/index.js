@@ -25,23 +25,24 @@ world.afterEvents.itemUse.subscribe(evd => {
 	const player = evd.source;
 	if (evd.itemStack.typeId !== configItem) return;
 	if (!player.hasTag(adminTag)) return;
-	const blockLook = player.getBlockFromViewDirection({ maxDistance: 10 }).block;
+	const blockLook = player.getBlockFromViewDirection({ maxDistance: 10 })?.block;
+	if (!blockLook) return;
 	const aboveLoc = { x: blockLook.x + 0.5, y: blockLook.y + 1, z: blockLook.z + 0.5 };
-	if (!player.dimension.getBlock(aboveLoc).isAir()) return;
+	if (!player.dimension.getBlock(aboveLoc)?.isAir()) return;
 	let [nearestLB] = player.dimension.getEntities({ type: 'floating:text', location: aboveLoc, closest: 1 });
-	if (!nearestLB) nearestLB = player.dimension.spawnEntity('floating:text', aboveLoc);
 	new ModalFormData()
 		.title('§l§5Leaderboard Settings')
-		.textField('§6Enter the objective name\n§7This is the objective that will be tracked on the leaderboard', 'money, coins, time', nearestLB.getDynamicProperty('objName'))
-		.textField('§6Enter the display name\n§7This is the text that will display above the top players', '§l§6Top Coins§r, §bTime Played', nearestLB.getDynamicProperty('lbName'))
-		.textField('§6Enter the colour for the LB number', '', nearestLB.getDynamicProperty('numCo'))
-		.textField('§6Enter the colour for the player name', '', nearestLB.getDynamicProperty('namCo'))
-		.textField('§6Enter the colour for the score', '', nearestLB.getDynamicProperty('scoCo'))
-		.slider('§6Select the top X players to display on the scoreboard', 1, 25, 1, nearestLB.getDynamicProperty('topX'))
+		.textField('§6Enter the objective name\n§7This is the objective that will be tracked on the leaderboard', 'money, coins, time', nearestLB?.getDynamicProperty('objName'))
+		.textField('§6Enter the display name\n§7This is the text that will display above the top players', '§l§6Top Coins§r, §bTime Played', nearestLB?.getDynamicProperty('lbName'))
+		.textField('§6Enter the colour for the LB number', '', nearestLB?.getDynamicProperty('numCo') ?? '§a')
+		.textField('§6Enter the colour for the player name', '', nearestLB?.getDynamicProperty('namCo') ?? '§b')
+		.textField('§6Enter the colour for the score', '', nearestLB?.getDynamicProperty('scoCo') ?? '§c')
+		.slider('§6Select the top X players to display on the scoreboard', 1, 25, 1, nearestLB?.getDynamicProperty('topX'))
 		.toggle('§6Delete this leaderboard?\n§cNo §f| §aYes', false)
 		.show(player).then(response => {
 			if (response.canceled) return;
 			const [obj, disp, numCo, namCo, scoCo, top, del] = response.formValues;
+			if (!nearestLB) nearestLB = player.dimension.spawnEntity('floating:text', aboveLoc);
 			if (del) return nearestLB.triggerEvent('text:despawn');
 			if (numCo.length !== 2 || namCo.length !== 2 || scoCo.length !== 2)
 				return player.sendMessage('§cColour inputs must be two characters long!')
