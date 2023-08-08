@@ -1,35 +1,64 @@
-import { system, world } from '@minecraft/server';
+import { DynamicPropertiesDefinition, EntityTypes, system, world } from '@minecraft/server';
+import { ModalFormData } from '@minecraft/server-ui';
 
 const refreshRate = 100; //How many ticks the leaderboards will take to refresh.
 //Lower will speed it up, but cause more lag. Beware!
 //Default is 100 ticks, or 5 seconds.
 
-const topX = 10; //The max top players to display on the leaderboard. Default is 10.
-
-const numberColour = '§a'; //Changes the colour of the position number.
-const nameColour = '§b'; //Changes the colour of the player name.
-const scoreColour = '§c'; //Changes the colour of the score value.
+const configItem = 'minecraft:nether_star'; //The item that will open the config menu.
 
 const adminTag = 'stafftag'; //The tag that allows players to rename text entities.
 
 const cmdPrefix = '!' //Prefix for custom commands.
 
-//Leaderboard:Objective-Header
-//The above tag is added to the text entity so it knows what objective to display, as well as the header for the leaderboard.
-//An example tag could be 'Leaderboard:money-§l§6TOP COINS'
-//The above would track the objective 'money' with a leaderboard heading of '§l§6TOP COINS'.
-
-//leaderboard
-//This tag will let the text entity know it is supposed to be displaying a leaderboard.
-
-//!! BOTH TAGS ARE CASE-SENSITIVE !!
-
+const lbProps = new DynamicPropertiesDefinition()
+	.defineString('lbName', 64)
+	.defineString('objName', 15)
+	.defineNumber('topX')
+	.defineString('numCo', 5, '§a')
+	.defineString('namCo', 5, '§b')
+	.defineString('scoCo', 5, '§c')
+world.afterEvents.worldInitialize.subscribe(evd => {
+	evd.propertyRegistry.registerEntityTypeDynamicProperties(lbProps, EntityTypes.get('floating:text'))
+});
+world.afterEvents.itemUse.subscribe(evd => {
+	const player = evd.source;
+	if (evd.itemStack.typeId !== configItem) return;
+	if (!player.hasTag(adminTag)) return;
+	const blockLook = player.getBlockFromViewDirection({ maxDistance: 10 }).block;
+	const aboveLoc = { x: blockLook.x + 0.5, y: blockLook.y + 1, z: blockLook.z + 0.5 };
+	if (!player.dimension.getBlock(aboveLoc).isAir()) return;
+	let [nearestLB] = player.dimension.getEntities({ type: 'floating:text', location: aboveLoc, closest: 1 });
+	if (!nearestLB) nearestLB = player.dimension.spawnEntity('floating:text', aboveLoc);
+	new ModalFormData()
+		.title('§l§5Leaderboard Settings')
+		.textField('§6Enter the objective name\n§7This is the objective that will be tracked on the leaderboard', 'money, coins, time', nearestLB.getDynamicProperty('objName'))
+		.textField('§6Enter the display name\n§7This is the text that will display above the top players', '§l§6Top Coins§r, §bTime Played', nearestLB.getDynamicProperty('lbName'))
+		.textField('§6Enter the colour for the LB number', '', nearestLB.getDynamicProperty('numCo'))
+		.textField('§6Enter the colour for the player name', '', nearestLB.getDynamicProperty('namCo'))
+		.textField('§6Enter the colour for the score', '', nearestLB.getDynamicProperty('scoCo'))
+		.slider('§6Select the top X players to display on the scoreboard', 1, 25, 1, nearestLB.getDynamicProperty('topX'))
+		.toggle('§6Delete this leaderboard?\n§cNo §f| §aYes', false)
+		.show(player).then(response => {
+			if (response.canceled) return;
+			const [obj, disp, numCo, namCo, scoCo, top, del] = response.formValues;
+			if (del) return nearestLB.triggerEvent('text:despawn');
+			if (numCo.length !== 2 || namCo.length !== 2 || scoCo.length !== 2)
+				return player.sendMessage('§cColour inputs must be two characters long!')
+			world.getDimension('overworld').runCommandAsync(`scoreboard objectives add ${obj} dummy`);
+			nearestLB.setDynamicProperty('objName', obj);
+			nearestLB.setDynamicProperty('lbName', disp);
+			nearestLB.setDynamicProperty('topX', top);
+			nearestLB.setDynamicProperty('numCo', numCo);
+			nearestLB.setDynamicProperty('namCo', namCo);
+			nearestLB.setDynamicProperty('scoCo', scoCo);
+			nearestLB.addTag('leaderboard');
+		})
+});
 system.runInterval(() => {
-	for (const entity of world.getDimension("overworld").getEntities({ type: 'floating:text', tags: ['leaderboard'] })) {
-		const infoTag = entity.getTags().find(v => v.startsWith('Leaderboard:'));
-		if (!infoTag) continue;
-		let obj = infoTag.match(/(?<=Leaderboard:).*?(?=-)/)?.shift();
-		let leader = infoTag.match(/(?<=-).*/)?.shift();
+	for (const entity of world.getDimension('overworld').getEntities({ type: 'floating:text', tags: ['leaderboard'] })) {
+		let obj = entity.getDynamicProperty('objName');
+		let leader = entity.getDynamicProperty('lbName');
 		let newTop = topleaderboard(obj), current = 1;
 		for (let i = 0; i < entity.nameTag.match(/\n/g)?.length; i++) {
 			const plrName = entity.nameTag.match(/(?<=\d§r\. .{2}).*(?=§r: .{2})/g)[i];
@@ -39,8 +68,8 @@ system.runInterval(() => {
 					score: Number(entity.nameTag.replace(/,/g, '').match(/(?<=§r: .{2})\d+/g)[i])
 				})
 		}; newTop.sort((a, b) => b.score - a.score);
-		for (let i of newTop.slice(0, topX)) {
-			leader += `\n${numberColour.slice(0, 2)}${current}§r. ${nameColour.slice(0, 2)}${i.name}§r: ${scoreColour.slice(0, 2)}${i.score.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
+		for (let i of newTop.slice(0, entity.getDynamicProperty('topX'))) {
+			leader += `\n${entity.getDynamicProperty('numCo')}${current}§r. ${entity.getDynamicProperty('namCo')}${i.name}§r: ${entity.getDynamicProperty('scoCo')}${i.score.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
 			current++;
 		}
 		entity.nameTag = leader;

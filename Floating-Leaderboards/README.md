@@ -12,50 +12,27 @@ The `refreshRate` constant controls how many ticks it will take for the leaderbo
 - A lower number will speed it up, but cause more lag. Beware!
 - The default value is 100 ticks, or 5 seconds.
 
-The `topX` constant changes the max number of players visible on each leaderboard. Default is ten.
+The constant `adminTag` is simply the staff tag that will allow any player with this tag to edit floating text names & set up leaderboards.
 
-To switch the colours associated with each leaderboard element:
- 
-Change the constants located at the top of the `scripts/index.js` file.
-
-`numberColour` will change the colour of the leading player ranking on the scoreboard.
-`nameColour` will change the colour of the player's name on the scoreboard.
-`scoreColour` will change the colour of the player's score on the provided objective.
-- By default, these colours are Lime (§a), Light Blue (§b), and Light Red (§c), respectively.
-
-The constant `adminTag` is simply the staff tag that will allow any player with this tag to edit floating text names.
+The constant `configItem` is simply the staff tag that will allow any player who right-clicks with this item (and has the above tag) to edit & set up leaderboards.
 
 # Commands
 - rename: Renames the text entity the player is currently looking at. 
 	Use \n in your command to set a new line on the entity's name.
-	This command is only useable for players who have the adminTag config tag (this is `stafftag` by default)
+	This command is only useable for players who have the `adminTag` config tag (this is `stafftag` by default)
 
 # Setup
 To use this pack:
-1. Run /summon floating:text (and where you want it spawned, normal summon command stuff)
-2. Add the following tags to the entity that just got summoned.
-
-Tag: `Leaderboard:Objective-Header`
-- The above tag is added to the text entity so it knows what objective to display, as well as the header for the leaderboard.
-- An example tag could be `Leaderboard:money-§l§6TOP COINS`
-- The above example would track the top players in the objective `money` with a leaderboard heading of `§l§6TOP COINS`.
-
-Tag: `leaderboard`
-- This tag will let the text entity know it is supposed to be displaying a leaderboard.
-
-Example commands to add the tags:
-`/tag @e[type=floating:text,c=1] add "Leaderboard:money-§l§6TOP COINS"`
-`/tag @e[type=floating:text,c=1] add leaderboard`
-
-!! BOTH TAGS ARE CASE-SENSITIVE !!
+1. Right-click a block with the config item while you have the admin tag (these are `'minecraft:nether_star'` & `'stafftag'` by default)
+2. Configure the menu to your liking! If an objective you enter does not exist, it will be created.
+3. To edit a leaderboard, just click the block underneath it, allowing you to edit the objective, display, colours, and even despawn the leaderboard if you want.
 
 # Notes
-- The colour codes can only be two characters long. Anything above this limit will not be displayed.
-- Multiple leaderboards can exist in the same world! Just add the appropriate tags.
-- This pack doubles as a floating text addon- simply don't add the leaderboard tags to the text entity.
+- The colour codes can only be two characters long. Anything above this limit will throw an error.
+- Multiple leaderboards can exist in the same world!
+- This pack doubles as a floating text addon- simply use a text spawn egg.
 - You can use the `!rename` custom command to rename entities that are not leaderboards.
 - These leaderboards display offline players as well! Players will need to log on at least once to start being tracked.
-- To despawn a text entity, trigger the event `text:despawn` through the /event command (or other means)
 
 If you have questions, please ask me!
 
