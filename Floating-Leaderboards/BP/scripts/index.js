@@ -13,6 +13,7 @@ const cmdPrefix = '!' //Prefix for custom commands.
 
 const prefixMulti = new Map([['null', 1], ['k', 1e3], ['m', 1e6], ['b', 1e9], ['t', 1e12], ['qd', 1e15], ['qt', 1e18]]);
 const formatting = [
+	{ divider: 1, suffix: ' ' },
 	{ divider: 1e3, suffix: 'k' },
 	{ divider: 1e6, suffix: 'm' },
 	{ divider: 1e9, suffix: 'b' },
@@ -72,7 +73,7 @@ system.runInterval(() => {
 		let newTop = topleaderboard(obj), current = 1;
 		const plrNames = entity.nameTag.match(/(?<=\d§r\. .{2}).*(?=§r: .{2})/g);
 		const plrScores = entity.nameTag.replace(/,/g, '').match(/(?<=§r: .{2})[0-9.]+/g);
-		const plrMultis = entity.nameTag.match(/(?<=\d)\D(?=\n|$)/g);
+		const plrMultis = entity.nameTag.match(/(?<=\d)\D| (?=\n|$)/g);
 		for (let i = 0; i < entity.nameTag.match(/\n/g)?.length; i++) {
 			const plrName = plrNames[i];
 			if (newTop.some(v => v.name === plrName)) continue;
