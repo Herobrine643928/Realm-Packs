@@ -38,7 +38,7 @@ world.afterEvents.itemUse.subscribe(evd => {
 	if (!blockLook) return;
 	const aboveLoc = { x: blockLook.x + 0.5, y: blockLook.y + 1, z: blockLook.z + 0.5 };
 	if (!player.dimension.getBlock(aboveLoc)?.isAir()) return;
-	let [nearestLB] = player.dimension.getEntities({ type: 'floating:text', location: aboveLoc, closest: 1 });
+	let [nearestLB] = player.dimension.getEntities({ type: 'floating:text', location: aboveLoc, closest: 1, maxDistance: 1 });
 	new ModalFormData()
 		.title('§l§5Leaderboard Settings')
 		.textField('§6Enter the objective name\n§7This is the objective that will be tracked on the leaderboard', 'money, coins, time', nearestLB?.getDynamicProperty('objName'))
