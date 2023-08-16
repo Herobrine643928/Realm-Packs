@@ -1,0 +1,43 @@
+{
+	"format_version": 2,
+	"header": {
+		"name": "KD Counter",
+		"description": "KD counter pack.\nCreated by Herobrine64#3928.\nUPDATED FOR 1.20.10",
+		"uuid": "319d940e-6da0-b95b-0f68-b3bfeb8a2767",
+		"version": [
+			1,
+			0,
+			0
+		],
+		"min_engine_version": [
+			1,
+			18,
+			0
+		]
+	},
+	"modules": [
+		{
+			"type": "data",
+			"uuid": "b53ff90b-3e4e-59e5-37d4-040f2ba234eb",
+			"version": [
+				1,
+				0,
+				0
+			]
+		},
+		{
+			"type": "script",
+			"language": "javascript",
+			"entry": "scripts/index.js",
+			"uuid": "a9b31bc2-6dc0-1746-01f0-16f054e835cb",
+			"version": "1.4.0-beta"
+		}
+	],
+	"dependencies": [
+		{
+			"description": "@minecraft/server module dependency",
+			"module_name": "@minecraft/server",
+			"version": "1.4.0-beta"
+		}
+	]
+}

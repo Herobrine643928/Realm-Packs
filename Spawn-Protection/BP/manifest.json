@@ -1,0 +1,29 @@
+{
+	"format_version": 2,
+	"header": {
+		"name": "Spawn Protection",
+		"description": "Pack that adds spawn protection based on tags.\nCreated by Herobrine64#3928.\nUPDATED FOR 1.20.10",
+		"uuid": "2d7f7635-b75c-460e-8a02-311467cd814d",
+		"version": [
+			1,
+			1,
+			0
+		],
+		"min_engine_version": [
+			1,
+			18,
+			0
+		]
+	},
+	"modules": [
+		{
+			"type": "data",
+			"uuid": "a87aebc6-971e-49ef-9135-48ed522cba7b",
+			"version": [
+				1,
+				0,
+				0
+			]
+		}
+	]
+}
