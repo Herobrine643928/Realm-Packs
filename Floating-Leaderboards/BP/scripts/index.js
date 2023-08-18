@@ -72,7 +72,7 @@ system.runInterval(() => {
 		let newTop = topleaderboard(obj), current = 1;
 		const plrNames = entity.nameTag.match(/(?<=\d§r\. .{2}).*(?=§r: .{2})/g);
 		const plrScores = entity.nameTag.replace(/,/g, '').match(/(?<=§r: .{2})[-0-9.]+/g);
-		const plrMultis = entity.nameTag.match(/.(?=\n|$)/g).slice(1);
+		const plrMultis = entity.nameTag.match(/.(?=\n|$)/g)?.slice(1);
 		for (let i = 0; i < entity.nameTag.match(/\n/g)?.length; i++) {
 			const plrName = plrNames[i];
 			if (newTop.some(v => v.name === plrName)) continue;
