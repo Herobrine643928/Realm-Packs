@@ -1,6 +1,7 @@
 # KD Tracker
 
 This pack tracks kills & deaths of a player.
+The only experimental toggle needed for this pack is Beta APIs.
 
 # Configuration
 The constants `deathObjective` & `killObjective` are the objectives that will be added to when a player dies & when a player kills, respectively.

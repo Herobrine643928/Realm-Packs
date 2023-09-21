@@ -64,13 +64,13 @@
 											"test": "has_tag",
 											"subject": "self",
 											"operator": "==",
-											"value": "safezone"
+											"value": "safezone" //Change this to the tag you want to use!
 										},
 										{
 											"test": "has_tag",
 											"subject": "other",
 											"operator": "==",
-											"value": "safezone"
+											"value": "safezone" //And don't forget to change this one as well
 										}
 									]
 								}

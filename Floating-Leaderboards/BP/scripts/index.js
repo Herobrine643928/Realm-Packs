@@ -37,7 +37,7 @@ world.afterEvents.itemUse.subscribe(evd => {
 	const blockLook = player.getBlockFromViewDirection({ maxDistance: 10 })?.block;
 	if (!blockLook) return;
 	const aboveLoc = { x: blockLook.x + 0.5, y: blockLook.y + 1, z: blockLook.z + 0.5 };
-	if (!player.dimension.getBlock(aboveLoc)?.isAir()) return;
+	if (player.dimension.getBlock(aboveLoc)?.typeId !== 'minecraft:air') return;
 	let [nearestLB] = player.dimension.getEntities({ type: 'floating:text', location: aboveLoc, closest: 1, maxDistance: 1 });
 	new ModalFormData()
 		.title('§l§5Leaderboard Settings')
