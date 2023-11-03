@@ -1,7 +1,7 @@
 # Mob Stacker
 
 This pack allows mobs to stack with other mobs of the same type using script API.
-The only experimental toggle needed for this pack is Beta APIs.
+No experimental toggles are needed for this pack to work!
 
 # Configuration
 

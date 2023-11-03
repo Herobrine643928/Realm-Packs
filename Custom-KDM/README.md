@@ -1,7 +1,7 @@
 # Custom Kill & Death Messages
 
 This pack allows the user to create custom kill and death messages for their players.
-The only experimental toggle needed for this pack is Beta APIs.
+No experimental toggles are needed for this pack to work!
 
 # Configuration
 The constants `defaultDeathMsg` & `defaultKillMsg` are the default messages that will be used if no custom one is found on the player.
