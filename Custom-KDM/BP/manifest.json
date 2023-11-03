@@ -2,7 +2,7 @@
 	"format_version": 2,
 	"header": {
 		"name": "Kill & Death Messages",
-		"description": "Custom kill and death messages pack.\nCreated by Herobrine64#3928.\nUPDATED FOR 1.20.10",
+		"description": "Custom kill and death messages pack.\nCreated by Herobrine64#3928.\nUPDATED FOR 1.20.40",
 		"uuid": "526da8fd-7e77-a94f-6040-d5a4a47ce6cf",
 		"version": [
 			1,
@@ -30,14 +30,14 @@
 			"language": "javascript",
 			"entry": "scripts/index.js",
 			"uuid": "ac59f0a1-5a6e-ba57-713e-0fc0ad2e24c7",
-			"version": "1.4.0-beta"
+			"version": "1.6.0"
 		}
 	],
 	"dependencies": [
 		{
 			"description": "@minecraft/server module dependency",
 			"module_name": "@minecraft/server",
-			"version": "1.4.0-beta"
+			"version": "1.6.0"
 		}
 	]
 }

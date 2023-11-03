@@ -20,16 +20,6 @@ const formatting = [
 	{ divider: 1e15, suffix: 'qd' },
 	{ divider: 1e18, suffix: 'qt' }
 ];
-const lbProps = new DynamicPropertiesDefinition()
-	.defineString('lbName', 64)
-	.defineString('objName', 15)
-	.defineNumber('topX')
-	.defineString('numCo', 5, '§a')
-	.defineString('namCo', 5, '§b')
-	.defineString('scoCo', 5, '§c')
-world.afterEvents.worldInitialize.subscribe(evd => {
-	evd.propertyRegistry.registerEntityTypeDynamicProperties(lbProps, EntityTypes.get('floating:text'))
-});
 world.afterEvents.itemUse.subscribe(evd => {
 	const player = evd.source;
 	if (evd.itemStack.typeId !== configItem) return;
@@ -68,7 +58,7 @@ world.afterEvents.itemUse.subscribe(evd => {
 system.runInterval(() => {
 	for (const entity of world.getDimension('overworld').getEntities({ type: 'floating:text', tags: ['leaderboard'] })) {
 		let obj = entity.getDynamicProperty('objName');
-		let leader = entity.getDynamicProperty('lbName');
+		let leader = entity.getDynamicProperty('lbName') ?? '';
 		let newTop = topleaderboard(obj), current = 1;
 		const plrNames = entity.nameTag.match(/(?<=\d§r\. .{2}).*(?=§r: .{2})/g);
 		const plrScores = entity.nameTag.replace(/,/g, '').match(/(?<=§r: .{2})[-0-9.]+/g);

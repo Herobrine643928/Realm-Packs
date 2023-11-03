@@ -2,7 +2,7 @@
 	"format_version": 2,
 	"header": {
 		"name": "Spawn Protection",
-		"description": "Pack that adds spawn protection based on tags.\nCreated by Herobrine64#3928.\nUPDATED FOR 1.20.30",
+		"description": "Pack that adds spawn protection based on tags.\nCreated by Herobrine64#3928.\nUPDATED FOR 1.20.40",
 		"uuid": "2d7f7635-b75c-460e-8a02-311467cd814d",
 		"version": [
 			1,
@@ -30,14 +30,14 @@
 			"language": "javascript",
 			"entry": "scripts/index.js",
 			"uuid": "25c9801c-a9d0-459d-82ea-668ed6dfa948",
-			"version": "1.6.0-beta"
+			"version": "1.6.0"
 		}
 	],
 	"dependencies": [
 		{
 			"description": "@minecraft/server module dependency",
 			"module_name": "@minecraft/server",
-			"version": "1.6.0-beta"
+			"version": "1.6.0"
 		}
 	]
 }
