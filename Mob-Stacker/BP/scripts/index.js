@@ -1,4 +1,4 @@
-import { system, world } from "@minecraft/server";
+import { Entity, system, world } from "@minecraft/server";
 
 const validMobs = [
 	{
@@ -28,6 +28,7 @@ const nameTagConfig = '§e[ §7x# @ §e]'; //Will display as §e[ §7x42 Cow §e
 system.runInterval(() => {
 	validMobs.forEach(type => {
 		world.getDimension("overworld").getEntities({ type: type.typeId }).forEach(entity => {
+			/** @type {{entity: Entity, stack: number}[]} */
 			const nearbyStacks = [];
 			const stacks = entity.dimension.getEntities({ type: entity.typeId, maxDistance: 3, location: entity.location });
 			if (stacks.length <= 1) return;
@@ -44,11 +45,7 @@ system.runInterval(() => {
 			if (nearbyStacks.length <= 0) return;
 			const entityValues = validMobs.find(v => v.typeId === entity.typeId);
 			mainStack.nameTag = nameTagConfig.replace(/(?<!!)#/g, (amount + maxStack).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')).replace(/(?<!!)@/g, entityValues?.displayName).replace(/!(?=@|#)/g, '');
-			nearbyStacks.forEach(({ entity }) => {
-				entity.nameTag = nameTagConfig.replace(/(?<!!)#/g, '0');
-				entity.triggerEvent('minecraft:despawn');
-			})
-
+			nearbyStacks.forEach(({ entity }) => entity.remove());
 		})
 	})
 }, 20);

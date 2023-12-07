@@ -15,25 +15,6 @@ Add in
 ```
 to the end of the `validMobs` constant.
 
-You also need to edit the mobs to add a despawn event to them.
-In the `"events"` section of the mob .json (usually found near the bottom), and add in 
-```json
-"minecraft:despawn": {
-	"add": {
-		"component_groups": [
-			"minecraft:despawn"
-		]
-	}
-},
-```
-making sure it is valid json. Next, go to the `"component_groups"` section of the mob .json (usually found near the top), and add in
-```json
-"minecraft:despawn": {
-	"minecraft:instant_despawn": {}
-},
-```
-all while making sure the editor doesn't yell at you.
-
 `displayName` is what will show up in the mob's stack.
 `typeId` is the ID of the mob you wish to stack. You can find these from /summon, but remember to add `minecraft:` where `namespace:` is, if using a vanilla mob.
 The four base mobs are given as examples in the pack. 

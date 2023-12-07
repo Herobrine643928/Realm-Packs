@@ -2,7 +2,7 @@
 	"format_version": 2,
 	"header": {
 		"name": "KD Counter",
-		"description": "KD counter pack.\nCreated by Herobrine64#3928.\nUPDATED FOR 1.20.40",
+		"description": "KD counter pack.\nCreated by Herobrine64#3928.\nUPDATED FOR 1.20.50",
 		"uuid": "319d940e-6da0-b95b-0f68-b3bfeb8a2767",
 		"version": [
 			1,
@@ -30,14 +30,14 @@
 			"language": "javascript",
 			"entry": "scripts/index.js",
 			"uuid": "a9b31bc2-6dc0-1746-01f0-16f054e835cb",
-			"version": "1.6.0"
+			"version": "1.7.0"
 		}
 	],
 	"dependencies": [
 		{
 			"description": "@minecraft/server module dependency",
 			"module_name": "@minecraft/server",
-			"version": "1.6.0"
+			"version": "1.7.0"
 		}
 	]
 }
