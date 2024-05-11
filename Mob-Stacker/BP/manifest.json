@@ -2,7 +2,7 @@
 	"format_version": 2,
 	"header": {
 		"name": "Mob stacker pack",
-		"description": "Pack that allows mobs to stack with themselves! Customizable.\nCreated by Herobrine64#3928.\nUPDATED FOR 1.20.50",
+		"description": "Pack that allows mobs to stack with themselves! Customizable.\nCreated by Herobrine64#3928.\nUPDATED FOR 1.20.80",
 		"uuid": "319d019e-6da0-b95b-0f68-b3bfeb8a2767",
 		"version": [
 			1,
@@ -30,14 +30,14 @@
 			"language": "javascript",
 			"entry": "scripts/index.js",
 			"uuid": "a9b3abc7-6dc0-1746-01f0-16f054e8354b",
-			"version": "1.7.0"
+			"version": "1.10.0"
 		}
 	],
 	"dependencies": [
 		{
 			"description": "@minecraft/server module dependency",
 			"module_name": "@minecraft/server",
-			"version": "1.7.0"
+			"version": "1.10.0"
 		}
 	]
 }

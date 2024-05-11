@@ -11,7 +11,6 @@ const adminTag = 'stafftag'; //The tag that allows players to rename text entiti
 
 const cmdPrefix = '!' //Prefix for custom commands.
 
-const prefixMulti = new Map([['null', 1], ['k', 1e3], ['m', 1e6], ['b', 1e9], ['t', 1e12], ['qd', 1e15], ['qt', 1e18]]);
 const formatting = [
 	{ divider: 1e3, suffix: 'k' },
 	{ divider: 1e6, suffix: 'm' },
@@ -59,41 +58,40 @@ system.runInterval(() => {
 	for (const entity of world.getDimension('overworld').getEntities({ type: 'floating:text', tags: ['leaderboard'] })) {
 		let obj = entity.getDynamicProperty('objName');
 		let leader = entity.getDynamicProperty('lbName') ?? '';
-		let newTop = topleaderboard(obj), current = 1;
-		const plrNames = entity.nameTag.match(/(?<=\d§r\. .{2}).*(?=§r: .{2})/g);
-		const plrScores = entity.nameTag.replace(/,/g, '').match(/(?<=§r: .{2})[-0-9.]+/g);
-		const plrMultis = entity.nameTag.match(/.(?=\n|$)/g)?.slice(1);
-		for (let i = 0; i < entity.nameTag.match(/\n/g)?.length; i++) {
-			const plrName = plrNames[i];
-			if (newTop.some(v => v.name === plrName)) continue;
-			const multiplier = prefixMulti.get(plrMultis[i]) ?? 1;
-			const plrScore = Math.floor(parseFloat(plrScores[i] ?? 0) * multiplier * 100) / 100;
-			newTop.push({
-				name: plrName,
-				score: plrScore
-			})
-		}; newTop.sort((a, b) => b.score - a.score);
-		for (let i of newTop.slice(0, entity.getDynamicProperty('topX'))) {
-			const money = i.score;
-			let moneyFormatted = money.toString();
-			if (money >= 1000) {
-				for (let i = 0; i < formatting.length; i++)
-					if (money >= formatting[i].divider)
-						moneyFormatted = (Math.floor((money / formatting[i].divider) * 100) / 100) + formatting[i].suffix;
-			}
-			leader += `\n${entity.getDynamicProperty('numCo')}${current++}§r. ${entity.getDynamicProperty('namCo')}${i.name}§r: ${entity.getDynamicProperty('scoCo')}${moneyFormatted}`;
-		}
-		entity.nameTag = leader;
-	}
-	function topleaderboard(obj) {
+		let newTop = topleaderboard(obj);
 		/** @type {{name:string,score:number}[]} */
-		const scores = [];
-		world.getPlayers().forEach(plr => {
-			scores.push({ name: plr.name, score: getScore(plr, obj) })
-		}); scores.sort((a, b) => b.score - a.score)
-		return scores;
+		const playerData = JSON.parse(entity.getDynamicProperty('leaderData') ?? '[]');
+		playerData.forEach(data => {
+			if (newTop.some(v => v.name === data.name)) return;
+			newTop.push({
+				name: data.name,
+				score: data.score
+			})
+		});
+		newTop.sort((a, b) => b.score - a.score);
+		const slicedTop = newTop.slice(0, entity.getDynamicProperty('topX'));
+		slicedTop.forEach((data, index) => {
+			const amount = data.score;
+			let amtFormatted = amount.toString();
+			if (amount >= 1000) {
+				for (let i = 0; i < formatting.length; i++)
+					if (amount >= formatting[i].divider)
+						amtFormatted = (Math.floor((amount / formatting[i].divider) * 100) / 100) + formatting[i].suffix;
+			}
+			leader += `\n${entity.getDynamicProperty('numCo')}${index + 1}§r. ${entity.getDynamicProperty('namCo')}${data.name}§r: ${entity.getDynamicProperty('scoCo')}${amtFormatted}`;
+		}); entity.nameTag = leader;
+		entity.setDynamicProperty('leaderData', JSON.stringify(newTop.slice(0, entity.getDynamicProperty('topX') + 10)));
 	}
 }, refreshRate);
+
+function topleaderboard(obj) {
+	/** @type {{name:string,score:number}[]} */
+	const scores = [];
+	world.getPlayers().forEach(plr => {
+		scores.push({ name: plr.name, score: getScore(plr, obj) })
+	}); scores.sort((a, b) => b.score - a.score);
+	return scores;
+};
 
 world.beforeEvents.chatSend.subscribe(chat => {
 	const player = chat.sender;
