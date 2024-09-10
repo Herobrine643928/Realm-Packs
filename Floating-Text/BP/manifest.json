@@ -2,7 +2,7 @@
 	"format_version": 2,
 	"header": {
 		"name": "Floating Text",
-		"description": "Floating text pack.\nCreated by Herobrine64#3928.\nUPDATED FOR 1.20.80",
+		"description": "Floating text pack.\nCreated by Herobrine64#3928.\nUPDATED FOR 1.21.30",
 		"uuid": "319d940e-6da0-1d57-0f68-b3bfeb8a2767",
 		"version": [
 			1,
@@ -30,7 +30,7 @@
 			"language": "javascript",
 			"entry": "scripts/index.js",
 			"uuid": "73231bc7-6ac0-1746-01f0-16f054e835cb",
-			"version": "1.11.0-beta"
+			"version": "1.14.0-beta"
 		}
 	],
 	"metadata": {
@@ -42,7 +42,7 @@
 		{
 			"description": "@minecraft/server module dependency",
 			"module_name": "@minecraft/server",
-			"version": "1.11.0-beta"
+			"version": "1.14.0-beta"
 		}
 	]
 }
